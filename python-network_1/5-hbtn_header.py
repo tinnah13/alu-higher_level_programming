@@ -1,11 +1,9 @@
 #!/usr/bin/python3
-"""Request to the URL and displays the value of the variable."""
-
+import requests
+import sys
 
 if __name__ == "__main__":
-    import requests
-    import sys
+    url = sys.argv[1]
 
-    respo = requests.get(sys.argv[1])
-    header_var = respo.headers.get('X-Request-Id')
-    print(header_var)
+    r = requests.get(url)
+    print(r.headers.get('X-Request-Id'))
