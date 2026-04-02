@@ -1,21 +1,19 @@
 #!/usr/bin/python3
-"""Python scrip that takes in a letter and send POST request"""
-
-
+"""Sends a POST request with a letter param and displays JSON result."""
 import requests
-from sys import argv
-
+import sys
 
 if __name__ == "__main__":
-    q = argv[1] if len(argv) == 2 else ""
-    url = 'http://0.0.0.0:5000/search_user'
-    r = requests.post(url, data={'q': q})
+    q = sys.argv[1] if len(sys.argv) > 1 else ""
+    response = requests.post(
+        "http://0.0.0.0:5000/search_user",
+        data={"q": q}
+    )
     try:
-        r_dict = r.json()
-        id, name = r_dict.get('id'), r_dict.get('name')
-        if len(r_dict) == 0 or not id or not name:
-            print("No result")
+        data = response.json()
+        if data:
+            print("[{}] {}".format(data.get("id"), data.get("name")))
         else:
-            print("[{}] {}".format(r_dict.get('id'), r_dict.get('name')))
-    except:
+            print("No result")
+    except ValueError:
         print("Not a valid JSON")
