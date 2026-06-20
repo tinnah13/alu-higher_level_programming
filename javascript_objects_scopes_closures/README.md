@@ -1,0 +1,1 @@
+this is my javascript_objects_scopes_closures
